@@ -1,0 +1,2 @@
+This is one of my previous work in blender. I used noise texture for the sun and the planet texture
+and I also used noise for the asteroids. There are multiple sun and spotlights, and an environment map.
