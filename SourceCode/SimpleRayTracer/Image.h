@@ -22,12 +22,12 @@ public:
 		{
 			std::invalid_argument("Pixel coordinate is outside of image!");
 		}
-		image[y * h + x] = value;
+		image[y * w + x] = value;
 	}
 
 	Color getPixel(int x,int y)
 	{
-		return image.at(y * h + x);
+		return image.at(y * w + x);
 	}
 
 	void clear()
