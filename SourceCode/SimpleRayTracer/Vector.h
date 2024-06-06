@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 
+//TODO: Write xz,xy,xyz,yz ... getters to vector 3 and 4
 class Vector2 {
 public:
 	float x, y;
@@ -343,3 +344,16 @@ public:
 		return Matrix4(r1, r2, r3,r4);
 	}
 };
+
+Vector4 operator*(Matrix4& mat, Vector4& vec) {
+	Vector4 r1 = mat.row1();
+	Vector4 r2 = mat.row2();
+	Vector4 r3 = mat.row3();
+	Vector4 r4 = mat.row4();
+
+	float x = Dot(r1, vec);
+	float y = Dot(r2, vec);
+	float z = Dot(r3, vec);
+	float w = Dot(r4, vec);
+	return Vector4(x, y, z, w);
+}

@@ -11,9 +11,14 @@ public:
 	const int w, h;
 	std::vector<Color> image;
 
+	Image() : w(1920), h(1080)
+	{
+		image.insert(image.begin(), w * h, Color());
+	}
+
 	Image(int w, int h) : w(w), h(h)
 	{
-		image.insert(image.begin(),w*h,Color());
+		image.insert(image.begin(), w * h, Color());
 	}
 
 	void setPixel(int x, int y, Color value)

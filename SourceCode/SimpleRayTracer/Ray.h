@@ -4,7 +4,7 @@
 struct Ray
 {
 	Vector3 origin;
-	Vector3 dir;
+	Vector3 dir; //Always should be normalized
 
 	Ray()
 	{
@@ -12,7 +12,7 @@ struct Ray
 		dir = Vector3::zero();
 	}
 
-	Ray(Vector3 origin, Vector3 direction) : dir(direction), origin(origin)
+	Ray(Vector3 origin, Vector3 direction) : dir(direction.norm()), origin(origin)
 	{
 
 	}
