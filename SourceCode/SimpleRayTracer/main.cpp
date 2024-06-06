@@ -29,7 +29,7 @@ void RandomImage()
 			image.setPixel(x, y, Color(r, g, b));
 		}
 	}
-	image.writePPM("Gazsi.ppm");
+	image.writePPM("Squares.ppm");
 }
 
 void CircleImage()
@@ -43,10 +43,10 @@ void CircleImage()
 	int stepX = w / n_small_x;
 	int stepY = h / n_small_y;
 
-	int cx = w / 2;
-	int cy = h / 2;
+	float radius = 100;
 
 	Image image(w, h);
+	Vector2 center(w / 2, h / 2);
 	Color circleCol(255, 0, 0);
 	Color bg(128, 128, 128);
 
@@ -58,23 +58,19 @@ void CircleImage()
 		{
 			int x = small_x * stepX + i % stepX;
 			int y = small_y * stepY + i / stepX;
-
-			int r = small_i == 0 ? 0 : 255 / small_i;
-			int g = small_i * 16;
-			int b = small_i * small_i * 4;
-			image.setPixel(x, y, Color(r, g, b));
+			Vector2 pos(x, y);
+			if ((pos - center).length() < radius)
+				image.setPixel(x, y, circleCol);
+			else
+				image.setPixel(x, y, bg);
 		}
 	}
-	image.writePPM("Gazsi.ppm");
+	image.writePPM("Circle.ppm");
 }
 
 int main()
 {
-	Vector2 v1(1, 1);
-	Vector2 v2(2, 2);
-	Vector2 res = v1 * 6;
-	std::cout << res.x << " " << res.y;
-	//RandomImage();
-	//CircleImage();
+	RandomImage();
+	CircleImage();
 }
 
