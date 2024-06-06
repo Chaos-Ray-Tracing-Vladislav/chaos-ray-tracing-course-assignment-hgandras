@@ -309,10 +309,10 @@ public:
 	Vector4 row3() { return Vector4(data[8], data[9], data[10],data[11]); }
 	Vector4 row4() { return Vector4(data[12], data[13], data[14], data[15]); }
 
-	Vector4 row1() { return Vector4(data[0], data[4], data[8], data[12]); }
-	Vector4 row2() { return Vector4(data[1], data[5], data[9], data[13]); }
-	Vector4 row3() { return Vector4(data[2], data[6], data[10], data[14]); }
-	Vector4 row4() { return Vector4(data[3], data[7], data[11], data[15]); }
+	Vector4 col1() { return Vector4(data[0], data[4], data[8], data[12]); }
+	Vector4 col2() { return Vector4(data[1], data[5], data[9], data[13]); }
+	Vector4 col3() { return Vector4(data[2], data[6], data[10], data[14]); }
+	Vector4 col4() { return Vector4(data[3], data[7], data[11], data[15]); }
 
 	static Matrix4 CreateTranslation(Vector3 delta)
 	{	
