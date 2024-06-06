@@ -7,9 +7,9 @@ private:
 	Matrix4 transform;
 
 public:
-	Frame()
+	Frame() : transform(Matrix4::Identity())
 	{
-		Matrix4::Identity();
+
 	}
 
 	Frame(Matrix3& orientation, Vector3& position) : transform(Matrix4(orientation,position))

@@ -4,32 +4,36 @@
 #include "Image.h"
 #include "Ray.h"
 
+const double PI = acos(-1);
+
+//TODO: Maybe just passing the image dimensions is enough instead of the whole image
 class Camera {
 private:
 	float planeW;
 	float planeH;
 	float pixelStep;
 
-public:
-
-	Frame frame;
-	float FOV;
-	Image image;
-
-	Camera() : FOV(45)
+	void update_params()
 	{
 		float alpha = FOV / 2.f;
-		planeW = tanf(alpha) * 2;
+		planeW = tanf(alpha/180*PI) * 2;
 		planeH = planeW * image.h / image.w;
 		pixelStep = planeW / image.w;
 	}
 
+public:
+	Frame frame;
+	float FOV;
+	Image image;
+
+	Camera() 
+	{
+		SetFOV(90);
+	}
+
 	Camera(Image& img, Frame frame, float FOV) :frame(frame), image(img), FOV(FOV)
 	{
-		float alpha = FOV / 2.f;
-		planeW = tanf(alpha) * 2;
-		planeH = planeW * image.h / image.w;
-		pixelStep = planeW / image.w;
+		update_params();
 	}
 
 	//Casts a ray through a pixel of the image. The image plane is distance 1 from the camera
@@ -41,16 +45,16 @@ public:
 		
 		//NDC space (Not really, because these are the real world dimensions measured from the corner of the 
 		// image)
-		float x = (x + 0.5f) * pixelStep;
-		float y = (y + 0.5f) * pixelStep;
+		float xS = (x + 0.5f) * pixelStep;
+		float yS = (y + 0.5f) * pixelStep;
 
 		//Screen space
-		x = x - planeW / 2;
-		y = planeH / 2 - y;
+		xS = xS - planeW / 2;
+		yS = planeH / 2 - yS;
 
 		//Determine dicrection and origin
 		Vector3 origin = Vector3::zero();
-		Vector3 dir(x,y,-1);
+		Vector3 dir(xS,yS,-1);
 
 		//Transform to world
 		origin = frame.ToWorld(origin);
@@ -58,5 +62,10 @@ public:
 
 		return Ray(origin, dir);
 	}
-	
+
+	void SetFOV(float fov)
+	{
+		FOV = fov;
+		update_params();
+	}
 };
