@@ -70,7 +70,11 @@ void CircleImage()
 
 int main()
 {
-	RandomImage();
+	Vector2 v1(1, 1);
+	Vector2 v2(2, 2);
+	Vector2 res = v1 * 6;
+	std::cout << res.x << " " << res.y;
+	//RandomImage();
 	//CircleImage();
 }
 
