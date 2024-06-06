@@ -28,7 +28,8 @@ public:
 	//Properties
 	float length() { return sqrtf(x*x+y*y); }
 	Vector2 norm() { return Vector2(x / length(), y / length()); }
-	Vector2 zero() { return Vector2(0, 0); }
+
+	static Vector2 zero() { return Vector2(0, 0); }
 };
 
 inline Vector2 operator*(float a, Vector2& vec) { return Vector2(a * vec.x, a * vec.y); }
@@ -68,8 +69,9 @@ public:
 	//Properties
 	float length() { return sqrtf(x * x + y * y+z*z); }
 	Vector3 norm() { return Vector3(x / length(), y / length(),z/length()); }
-	Vector3 zero() { return Vector3(0, 0, 0); }
-	Vector3 up() { return Vector3(0, 1, 0); }
+
+	static Vector3 zero() { return Vector3(0, 0, 0); }
+	static Vector3 up() { return Vector3(0, 1, 0); }
 
 };
 
@@ -113,7 +115,8 @@ public:
 	//Properties
 	float length() { return sqrtf(x * x + y * y+z*z+w*w); }
 	Vector4 norm() { return Vector4(x / length(), y / length(), z / length(),w/length()); }
-	Vector4 zero() { return Vector4(0, 0, 0,0); }
+
+	static Vector4 zero() { return Vector4(0, 0, 0,0); }
 
 };
 
