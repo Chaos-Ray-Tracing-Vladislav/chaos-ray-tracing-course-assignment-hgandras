@@ -123,7 +123,7 @@ public:
 };
 
 inline Vector4 operator*(float a, Vector4& vec) { return Vector4(a * vec.x, a * vec.y, a * vec.z,a*vec.w); }
-inline float Dot(Vector4& a, Vector4& b) { return a.x * b.x + a.y * b.y + a.z * b.z+a.w*b.w; }
+inline float Dot(const Vector4& a,const Vector4& b) { return a.x * b.x + a.y * b.y + a.z * b.z+a.w*b.w; }
 
 //Matrices to respresent transformations
 //TODO: Write set row/col functions
@@ -138,7 +138,7 @@ public:
 			data.push_back(0);
 	}
 
-	Matrix3(Vector3& c1, Vector3& c2, Vector3& c3)
+	Matrix3(const Vector3& c1,const Vector3& c2,const Vector3& c3)
 	{
 		//row1
 		data.push_back(c1.x);
@@ -163,68 +163,49 @@ public:
 	Vector3 col2() { return Vector3(data[1], data[4], data[7]); }
 	Vector3 col3() { return Vector3(data[2], data[5], data[8]); }
 
-	Matrix3 T() {
-		Vector3 r1 = row1();
-		Vector3 r2 = row2();
-		Vector3 r3 = row3();		
-		return Matrix3(r1, r2, r3);
+	Matrix3 T() {		
+		return Matrix3(row1(), row2(), row3());
 	}
 
 	//Rotation in radians
 	static Matrix3 CreateRotation(float x,float y, float z)
 	{
 		//X rotation
-		Vector3 xr1(0, 0, 1);
-		Vector3 xr2(0, cosf(x), -sinf(x)); 
-		Vector3 xr3(0, sin(x), cos(x));
-		Matrix3 rotX(xr1,xr2,xr3);
+		Matrix3 rotX(Vector3(1, 0, 0),
+					Vector3(0, cosf(x), sinf(x)),
+					Vector3(0, -sinf(x), cosf(x)));
 		
 		//Y rotation
-		Vector3 yr1(cosf(y),0, sinf(y));
-		Vector3 yr2(0,1,0);
-		Vector3 yr3(-sinf(y),0,cosf(y));
-		Matrix3 rotY(yr1, yr2, yr3);
+		Matrix3 rotY(Vector3(cosf(y), 0, -sinf(y)), 
+					Vector3(0, 1, 0), 
+					Vector3(-sinf(y), 0, cosf(y)));
 
 		//Z rotation
-		Vector3 zr1(cosf(z), -sinf(z), 0);
-		Vector3 zr2(sinf(z), cos(z), 0);
-		Vector3 zr3(0, 0, 1);
-		Matrix3 rotZ(zr1, zr2, zr3);
+		Matrix3 rotZ(Vector3(cosf(z), sinf(z), 0),
+					Vector3(-sinf(z), cos(z), 0), 
+					Vector3(0, 0, 1));
 
 		return rotZ * rotY * rotX;
 	}
 
 	static Matrix3 Identity()
 	{
-		Vector3 r1(1, 0, 0);
-		Vector3 r2(0, 1, 0);
-		Vector3 r3(0, 0, 1);
-		return Matrix3(r1, r2, r3);
+		return Matrix3(Vector3(1,0,0), Vector3(0,1,0), Vector3(0,0,1));
 	}
 
 	//Matrix multiplication
 	Matrix3 operator*(Matrix3& other){
-		Vector3 r1 = row1();
-		Vector3 r2 = row2();
-		Vector3 r3 = row3();
 
-		Vector3 c1 = other.col1();
-		Vector3 c2 = other.col2();
-		Vector3 c3 = other.col3();
-
-		Vector3 r1new(Dot(r1, c1), Dot(r1, c2), Dot(r1, c3));
-		Vector3 r2new(Dot(r2, c1), Dot(r2, c2), Dot(r2, c3));
-		Vector3 r3new(Dot(r3, c1), Dot(r3, c2), Dot(r3, c3));
+		Vector3 r1new(Dot(row1(), other.col1()), Dot(row1(), other.col2()), Dot(row1(),other.col3()));
+		Vector3 r2new(Dot(row2(), other.col1()), Dot(row2(), other.col2()), Dot(row2(), other.col3()));
+		Vector3 r3new(Dot(row3(), other.col1()), Dot(row3(), other.col2()), Dot(row3(), other.col3()));
 		return Matrix3(r1new,r2new,r3new).T();
 	}
 
 	//Scalar multiplication
 	Matrix3 operator*(float a)
 	{
-		Vector3 c1 = col1() * a;
-		Vector3 c2 = col2() * a;
-		Vector3 c3 = col3() * a;
-		return Matrix3(c1, c2, c3);
+		return Matrix3(col1() * a, col2() * a,col3() * a);
 	}
 };
 
@@ -240,7 +221,7 @@ public:
 	}
 
 	//Constructor takes columns 
-	Matrix4(Vector4& c1, Vector4& c2, Vector4& c3,Vector4& c4)
+	Matrix4(const Vector4& c1,const Vector4& c2,const Vector4& c3,const Vector4& c4)
 	{
 		//row1
 		data.push_back(c1.x);
@@ -329,31 +310,20 @@ public:
 
 	static Matrix4 Identity()
 	{
-		Vector4 c1(1, 0, 0,0);
-		Vector4 c2(0, 1, 0,0);
-		Vector4 c3(0, 0, 1,0);
-		Vector4 c4(0, 0, 0, 1);
-		return Matrix4(c1, c2, c3,c4);
+		return Matrix4(Vector4(1,0,0,0),
+			Vector4(0,1,0,0),
+			Vector4(0,0,1,0),
+			Vector4(0,0,0,1));
 	}
 
 	Matrix4 T() {
-		Vector4 r1 = row1();
-		Vector4 r2 = row2();
-		Vector4 r3 = row3();
-		Vector4 r4 = row4();
-		return Matrix4(r1, r2, r3,r4);
+		return Matrix4(row1(), row2(), row3(), row4());
 	}
 };
 
 Vector4 operator*(Matrix4& mat, Vector4& vec) {
-	Vector4 r1 = mat.row1();
-	Vector4 r2 = mat.row2();
-	Vector4 r3 = mat.row3();
-	Vector4 r4 = mat.row4();
-
-	float x = Dot(r1, vec);
-	float y = Dot(r2, vec);
-	float z = Dot(r3, vec);
-	float w = Dot(r4, vec);
-	return Vector4(x, y, z, w);
+	return Vector4(Dot(mat.row1(), vec),
+		Dot(mat.row2(),vec),
+		Dot(mat.row3(),vec),
+		Dot(mat.row4(), vec));
 }
