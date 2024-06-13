@@ -2,6 +2,7 @@
 #include "Image.h"
 #include "Vector.h"
 #include "Camera.h"
+#include "Geometry.h"
 
 void RandomImage()
 {
@@ -80,10 +81,38 @@ void rayImage()
 	image.writePPM("Rays.ppm");
 }
 
+void Triangles()
+{
+	//Cross products
+	std::cout << Cross(Vector3(3.5, 0, 0), Vector3(1.75, 3.5, 0)) << std::endl;
+	std::cout << Cross(Vector3(3.0, -3, 1), Vector3(4, 9, 3)) << std::endl;
+
+	//Parallelogram areas
+	std::cout << Cross(Vector3(3,-3,1), Vector3(4,9,3)).length() << std::endl;
+	std::cout << Cross(Vector3(3,-3,1), Vector3(-12,12,-4)).length() << std::endl;
+
+	//Triangle normals
+	std::cout << Geometry::Triangle(Vector3(-1.75, -1.75, -3), Vector3(1.75, -1.75, -3), Vector3(0, 1.75, -3)).normal() << std::endl;
+	std::cout << Geometry::Triangle(Vector3(0,0,-1), Vector3(1,0,1), Vector3(-1,0,1)).normal() << std::endl;
+	std::cout << Geometry::Triangle(Vector3(0.56,1.11,1.23), Vector3(0.44,-2.368,-0.54), Vector3(-1.56,0.15,-1.92)).normal() << std::endl;
+
+	//Triangle area
+	std::cout << Geometry::Triangle(Vector3(-1.75, -1.75, -3), Vector3(1.75, -1.75, -3), Vector3(0, 1.75, -3)).area() << std::endl;
+	std::cout << Geometry::Triangle(Vector3(0, 0, -1), Vector3(1, 0, 1), Vector3(-1, 0, 1)).area() << std::endl;
+	std::cout << Geometry::Triangle(Vector3(0.56, 1.11, 1.23), Vector3(0.44, -2.368, -0.54), Vector3(-1.56, 0.15, -1.92)).area() << std::endl;
+
+}
+
 int main()
 {
+	//Task2
 	RandomImage();
 	CircleImage();
+
+	//Task3
 	rayImage();
+
+	//Task4
+	Triangles();
 }
 
