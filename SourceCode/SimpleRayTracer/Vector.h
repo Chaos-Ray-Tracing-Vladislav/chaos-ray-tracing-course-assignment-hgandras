@@ -2,8 +2,7 @@
 #include <vector>
 
 //TODO: Write xz,xy,xyz,yz ... getters to vector 3 and 4
-class Vector2 {
-public:
+struct Vector2 {
 	float x, y;
 
 	Vector2() : x(0), y(0)
@@ -38,8 +37,8 @@ inline Vector2 operator*(float a, Vector2& vec) { return Vector2(a * vec.x, a * 
 inline float Dot(Vector2& a, Vector2& b) { return a.x * b.x + a.y * b.y; }
 inline Vector2 Reflect(Vector2& incoming, Vector2& n) { return incoming - 2 * Dot(incoming, n) * n; }
 
-class Vector3 {
-public:
+struct Vector3 {
+
 	float x, y,z;
 
 	Vector3() : x(0), y(0),z(0)
@@ -75,17 +74,25 @@ public:
 	static Vector3 zero() { return Vector3(0, 0, 0); }
 	static Vector3 up() { return Vector3(0, 1, 0); }
 
+	
+
 };
+
+std::ostream& operator<<(std::ostream& os,const Vector3& vec)
+{
+	std::cout << std::format("Vector3({},{},{})", vec.x, vec.y, vec.z);
+	return os;
+}
 
 inline Vector3 operator*(float a, Vector3& vec) { return Vector3(a * vec.x, a * vec.y,a*vec.z); }
 inline float Dot(Vector3& a, Vector3& b) { return a.x * b.x + a.y * b.y+a.z*b.z; }
-inline Vector3 Cross(Vector3& a, Vector3& b) {
+inline Vector3 Cross(const Vector3& a,const Vector3& b) {
 	return Vector3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
 }
 inline Vector3 Reflect(Vector3& incoming, Vector3& n) { return incoming - 2 * Dot(incoming, n) * n; }
 
-class Vector4 {
-public:
+struct Vector4 {
+
 	float x, y, z, w;
 
 	Vector4() : x(0), y(0), z(0),w(0)
