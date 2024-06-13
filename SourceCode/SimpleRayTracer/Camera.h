@@ -28,7 +28,7 @@ public:
 
 	Camera() 
 	{
-		SetFOV(90);
+		setFOV(90);
 	}
 
 	Camera(Image& img, Frame frame, float FOV) :frame(frame), image(img), FOV(FOV)
@@ -63,9 +63,40 @@ public:
 		return Ray(origin, dir);
 	}
 
-	void SetFOV(float fov)
+	void setFOV(float fov)
 	{
 		FOV = fov;
 		update_params();
+	}
+
+	//These will all just rotate or translate the camera frame
+	void Dolly()
+	{
+
+	}
+
+	void Truck()
+	{
+
+	}
+
+	void Pedestal()
+	{
+
+	}
+
+	void Pan()
+	{
+
+	}
+
+	void Tilt()
+	{
+
+	}
+
+	void Roll()
+	{
+
 	}
 };
