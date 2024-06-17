@@ -12,12 +12,12 @@ public:
 
 	}
 
-	Frame(Matrix3& orientation, Vector3& position) : transform(Matrix4(orientation,position))
+	Frame(const Matrix3& orientation,const Vector3& position) : transform(Matrix4(orientation,position))
 	{
-	
+		
 	}
 
-	Frame(Matrix4& transform) : transform(transform)
+	Frame(const Matrix4& transform) : transform(transform)
 	{
 
 	}
@@ -40,15 +40,11 @@ public:
 	{
 		Vector4 point(p);
 		Vector4 transformed = ToWorld(point);
-		return Vector3(transformed.x, transformed.y, transformed.z);
+		return transformed.xyz();
 	}
 
 	Vector4 ToWorld(Vector4& p)
 	{
-		//Negate translation
-		Vector4 t = -transform.col4();
-		Vector3 t3(t.x, t.y, t.z);
-
 		//Invert rotation
 		Vector4 c1 = transform.col1();
 		Vector4 c2 = transform.col2();
@@ -59,11 +55,9 @@ public:
 		Vector3 rc3(c3.x, c3.y, c3.z);
 
 		Matrix3 rot(rc1, rc2, rc3);
-		Matrix3 rotT = rot.T();
 		
-		Matrix4 inverse(rotT, t3);
+		Matrix4 inverse(rot.T(), -transform.col4().xyz());
 		return inverse * p;
-		
 	}
 
 	//Generate local coordinate frame from normal in world space
@@ -77,5 +71,15 @@ public:
 		Matrix3 rot(x, y, z);
 		Matrix4 t(rot);
 		return Frame(t);
+	}
+
+	Vector3 position()
+	{
+		return transform.col4().xyz();
+	}
+
+	Matrix3 orientation()
+	{
+		return Matrix3(transform.col1().xyz(), transform.col2().xyz(), transform.col3().xyz());
 	}
 };

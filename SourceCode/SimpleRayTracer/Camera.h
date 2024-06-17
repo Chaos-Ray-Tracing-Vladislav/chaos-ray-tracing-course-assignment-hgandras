@@ -50,17 +50,15 @@ public:
 
 		//Screen space
 		xS = xS - planeW / 2;
-		yS = planeH / 2 - yS;
+		yS = -yS + planeH / 2;
 
-		//Determine dicrection and origin
-		Vector3 origin = Vector3::zero();
+		//Determine direction and origin
 		Vector3 dir(xS,yS,-1);
 
 		//Transform to world
-		origin = frame.ToWorld(origin);
-		dir = frame.ToWorld(dir);
+		Vector3 dirPointWorld = frame.ToWorld(dir);
 
-		return Ray(origin, dir);
+		return Ray(frame.position(), dirPointWorld+frame.position());
 	}
 
 	void setFOV(float fov)

@@ -34,7 +34,7 @@ struct Vector2 {
 };
 
 inline Vector2 operator*(float a, Vector2& vec) { return Vector2(a * vec.x, a * vec.y); }
-inline float Dot(Vector2& a, Vector2& b) { return a.x * b.x + a.y * b.y; }
+inline float Dot(const Vector2& a,const Vector2& b) { return a.x * b.x + a.y * b.y; }
 inline Vector2 Reflect(Vector2& incoming, Vector2& n) { return incoming - 2 * Dot(incoming, n) * n; }
 
 struct Vector3 {
@@ -74,8 +74,6 @@ struct Vector3 {
 	static Vector3 zero() { return Vector3(0, 0, 0); }
 	static Vector3 up() { return Vector3(0, 1, 0); }
 
-	
-
 };
 
 std::ostream& operator<<(std::ostream& os,const Vector3& vec)
@@ -84,8 +82,8 @@ std::ostream& operator<<(std::ostream& os,const Vector3& vec)
 	return os;
 }
 
-inline Vector3 operator*(float a, Vector3& vec) { return Vector3(a * vec.x, a * vec.y,a*vec.z); }
-inline float Dot(Vector3& a, Vector3& b) { return a.x * b.x + a.y * b.y+a.z*b.z; }
+inline Vector3 operator*(const float a,const Vector3& vec) { return Vector3(a * vec.x, a * vec.y,a*vec.z); }
+inline float Dot(const Vector3& a,const Vector3& b) { return a.x * b.x + a.y * b.y+a.z*b.z; }
 inline Vector3 Cross(const Vector3& a,const Vector3& b) {
 	return Vector3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
 }
@@ -126,8 +124,12 @@ struct Vector4 {
 	Vector4 norm() { return Vector4(x / length(), y / length(), z / length(),w/length()); }
 
 	static Vector4 zero() { return Vector4(0, 0, 0,0); }
-
+	
+	Vector3 xyz() {
+		return Vector3(x, y, z);
+	}
 };
+
 
 inline Vector4 operator*(float a, Vector4& vec) { return Vector4(a * vec.x, a * vec.y, a * vec.z,a*vec.w); }
 inline float Dot(const Vector4& a,const Vector4& b) { return a.x * b.x + a.y * b.y + a.z * b.z+a.w*b.w; }
