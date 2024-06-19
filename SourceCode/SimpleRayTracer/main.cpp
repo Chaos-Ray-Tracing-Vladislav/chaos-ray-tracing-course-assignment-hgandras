@@ -70,7 +70,7 @@ void rayImage()
 		int x = i % WIDTH;
 		int y = i / WIDTH;
 		Ray ray = cam.CastRay(x, y);
-		Color col(abs(ray.dir.x*255), abs(ray.dir.y*255), abs(ray.dir.z*255));
+		Color col((int)abs(ray.dir.x*255), (int)abs(ray.dir.y*255), (int)abs(ray.dir.z*255));
 		image.setPixel(x, y, col);
 	}
 	image.writePPM("Rays.ppm");
