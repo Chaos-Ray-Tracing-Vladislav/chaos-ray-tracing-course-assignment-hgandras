@@ -1,12 +1,10 @@
 #pragma once
 #include "Vector.h"
 
-class Frame
+struct Frame
 {
-private:
 	Matrix4 transform;
 
-public:
 	Frame() : transform(Matrix4::Identity())
 	{
 

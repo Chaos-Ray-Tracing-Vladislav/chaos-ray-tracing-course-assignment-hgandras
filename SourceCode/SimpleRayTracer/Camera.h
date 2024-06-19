@@ -83,9 +83,12 @@ public:
 
 	}
 
-	void Pan()
+	void Pan(float degree)
 	{
-
+		float PI = acos(-1);
+		float rad = degree / 360 * PI;
+		Matrix4 rotation = Matrix4::CreateRotation(0, rad, 0);
+		frame.transform = rotation * frame.transform;
 	}
 
 	void Tilt()

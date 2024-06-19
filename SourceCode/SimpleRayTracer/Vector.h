@@ -328,6 +328,17 @@ public:
 	Matrix4 T() {
 		return Matrix4(row1(), row2(), row3(), row4());
 	}
+
+	//Matrix multiplication
+	Matrix4 operator*(Matrix4& other) {
+
+		Vector4 r1new(Dot(row1(), other.col1()), Dot(row1(), other.col2()), Dot(row1(), other.col3()),Dot(row1(),other.col4()));
+		Vector4 r2new(Dot(row2(), other.col1()), Dot(row2(), other.col2()), Dot(row2(), other.col3()), Dot(row2(), other.col4()));
+		Vector4 r3new(Dot(row3(), other.col1()), Dot(row3(), other.col2()), Dot(row3(), other.col3()), Dot(row3(), other.col4()));
+		Vector4 r4new(Dot(row4(), other.col1()), Dot(row4(), other.col4()), Dot(row4(), other.col3()), Dot(row4(), other.col4()));
+
+		return Matrix4(r1new, r2new, r3new,r4new).T();
+	}
 };
 
 Vector4 operator*(Matrix4& mat, Vector4& vec) {
@@ -336,3 +347,4 @@ Vector4 operator*(Matrix4& mat, Vector4& vec) {
 		Dot(mat.row3(),vec),
 		Dot(mat.row4(), vec));
 }
+

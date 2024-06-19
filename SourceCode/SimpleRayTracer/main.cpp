@@ -152,6 +152,39 @@ void renderShape()
 	scene.Render("Mill.ppm");
 }
 
+void renderShapeMovedCamera()
+{
+	Image image(WIDTH, HEIGHT);
+	Camera cam(image, Frame(Matrix3::Identity(), Vector3(-3, 0, -1)), FOV);
+	cam.Pan(60);
+
+	Material::ColorMaterial m1(Color(255, 0, 0));
+	Material::ColorMaterial m2(Color(0, 255, 0));
+	Material::ColorMaterial m3(Color(0, 0, 255));
+
+	Geometry::Triangle t11(Vector3(0, 0, -3), Vector3(0.2, -1, -3), Vector3(-0.2, -1, -3), m1);
+	Geometry::Triangle t12(Vector3(0, 0, -2.9), Vector3(0.15, -0.9, -2.9), Vector3(-0.15, -0.9, -2.9), m2);
+	Geometry::Triangle t13(Vector3(0, 0, -2.8), Vector3(0.1, -0.8, -2.8), Vector3(-0.1, -0.8, -2.8), m3);
+
+	Geometry::Triangle t21(Vector3(0, 0, -3), Vector3(0.2, 1, -3), Vector3(-0.2, 1, -3), m1);
+	Geometry::Triangle t22(Vector3(0, 0, -2.9), Vector3(0.15, 0.9, -2.9), Vector3(-0.15, 0.9, -2.9), m2);
+	Geometry::Triangle t23(Vector3(0, 0, -2.8), Vector3(0.1, 0.8, -2.8), Vector3(-0.1, 0.8, -2.8), m3);
+
+	Geometry::Triangle t31(Vector3(0, 0, -3), Vector3(-1, 0.2, -3), Vector3(-1, -0.2, -3), m1);
+	Geometry::Triangle t32(Vector3(0, 0, -2.9), Vector3(-0.9, 0.15, -2.9), Vector3(-0.9, -0.15, -2.9), m2);
+	Geometry::Triangle t33(Vector3(0, 0, -2.8), Vector3(-0.8, 0.1, -2.8), Vector3(-0.8, -0.1, -2.8), m3);
+
+	Geometry::Triangle t41(Vector3(0, 0, -3), Vector3(1, 0.2, -3), Vector3(1, -0.2, -3), m1);
+	Geometry::Triangle t42(Vector3(0, 0, -2.9), Vector3(0.9, 0.15, -2.9), Vector3(0.9, -0.15, -2.9), m2);
+	Geometry::Triangle t43(Vector3(0, 0, -2.8), Vector3(0.8, 0.1, -2.8), Vector3(0.8, -0.1, -2.8), m3);
+
+	std::vector<Geometry::Triangle>geometry{ t11,t12,t13,t21,t22,t23,t31,t32,t33,t41,t42,t43 };
+	Scene scene(cam, geometry);
+	scene.Render("MillPan.ppm");
+}
+
+
+
 int main()
 {
 	//Task2
@@ -170,6 +203,6 @@ int main()
 	renderShape();
 
 	//Task6
-
+	renderShapeMovedCamera();
 }
 
