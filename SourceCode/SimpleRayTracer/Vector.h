@@ -51,7 +51,7 @@ struct Vector3 {
 
 	}
 
-	Vector3(Vector2 vec) : x(vec.x), y(vec.y), z(0)
+	Vector3(Vector2 vec) : x(vec.x), y(vec.y), z(1)
 	{
 
 	}
@@ -68,7 +68,7 @@ struct Vector3 {
 	Vector3 operator-() const { return Vector3(-x, -y,-z); }
 
 	//Properties
-	float length() { return sqrtf(x * x + y * y+z*z); }
+	float length() { return sqrtf(x * x + y * y + z * z); }
 	Vector3 norm() { return Vector3(x , y ,z) / length(); }
 
 	static Vector3 zero() { return Vector3(0, 0, 0); }

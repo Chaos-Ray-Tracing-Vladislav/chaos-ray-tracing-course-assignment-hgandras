@@ -51,7 +51,7 @@ void CircleImage()
 		int y = i / WIDTH;
 		
 		Vector2 pos(x, y);
-		if ((pos - center).length() < radius)
+		if (Dot((pos-center),(pos-center)) < radius*radius)
 			image.setPixel(x, y, circleCol);
 		else
 			image.setPixel(x, y, bg);
