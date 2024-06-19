@@ -28,7 +28,7 @@ struct Vector2 {
 
 	//Properties
 	float length() { return sqrtf(x*x+y*y); }
-	Vector2 norm() { return Vector2(x / length(), y / length()); }
+	Vector2 norm() { return Vector2(x , y )/length(); }
 
 	static Vector2 zero() { return Vector2(0, 0); }
 };
@@ -69,7 +69,7 @@ struct Vector3 {
 
 	//Properties
 	float length() { return sqrtf(x * x + y * y+z*z); }
-	Vector3 norm() { return Vector3(x / length(), y / length(),z/length()); }
+	Vector3 norm() { return Vector3(x , y ,z) / length(); }
 
 	static Vector3 zero() { return Vector3(0, 0, 0); }
 	static Vector3 up() { return Vector3(0, 1, 0); }
@@ -121,7 +121,7 @@ struct Vector4 {
 
 	//Properties
 	float length() { return sqrtf(x * x + y * y+z*z+w*w); }
-	Vector4 norm() { return Vector4(x / length(), y / length(), z / length(),w/length()); }
+	Vector4 norm() { return Vector4(x , y , z,w) / length(); }
 
 	static Vector4 zero() { return Vector4(0, 0, 0,0); }
 	
