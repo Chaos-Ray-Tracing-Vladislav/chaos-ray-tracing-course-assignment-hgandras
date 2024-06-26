@@ -29,6 +29,7 @@ struct Scene {
 		for (int i = 0; i < cam.image.w * cam.image.h; i++)
 		{
 			Geometry::Intersection closestIntersection;
+			float closestT = 100000;
 			bool intersected = false;
 			int x = i % cam.image.w;
 			int y = i / cam.image.w;
@@ -37,14 +38,14 @@ struct Scene {
 			for (int j = 0; j < geometry.size(); j++)
 			{
 				auto intersection = geometry[j].Intersect(ray);
-				if (intersection.value().t<closestIntersection.t)
+				if (intersection.value().t<closestT)
 				{
 					closestIntersection = intersection.value();
+					closestT = closestIntersection.t;
 					intersected = true;
 				}
 			}
 
-			//Sort intersections, and get material
 			if (!intersected)
 			{
 				cam.image.setPixel(x, y, bg);
