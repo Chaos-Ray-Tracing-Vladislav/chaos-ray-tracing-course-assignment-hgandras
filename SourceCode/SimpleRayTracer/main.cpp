@@ -183,6 +183,41 @@ void renderShapeMovedCamera()
 	scene.Render("MillPan.ppm");
 }
 
+void camMovements()
+{
+	Geometry::Triangle triangle(Vector3(-1.75, -1.75, -3), Vector3(1.75, -1.75, -3), Vector3(0, 1.75, -3));
+	Image image(WIDTH, HEIGHT);
+
+	Camera cam(image, Frame(Matrix3::Identity(), Vector3(-3, 0, -1)), FOV);
+
+	std::vector<Geometry::Triangle>geometry{ triangle };
+	Scene scene(cam, geometry);
+
+	cam.Dolly(3);
+	scene.Render("Dolly.ppm");
+	cam.Dolly(-3);
+
+	cam.Pan(-30);
+	scene.Render("Pan.ppm");
+	cam.Pan(30);
+
+	cam.Pedestal(3);
+	scene.Render("Pedestal.ppm");
+	cam.Pedestal(-3);
+
+	cam.Roll(30);
+	scene.Render("Roll.ppm");
+	cam.Roll(-30);
+
+	cam.Tilt(30);
+	scene.Render("Tilt.ppm");
+	cam.Tilt(-30);
+
+	cam.Truck(3);
+	scene.Render("Truck.ppm");
+	cam.Truck(-3);
+	
+}
 
 
 int main()
@@ -204,5 +239,6 @@ int main()
 
 	//Task6
 	renderShapeMovedCamera();
+	camMovements();
 }
 

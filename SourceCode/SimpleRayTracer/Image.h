@@ -48,7 +48,7 @@ public:
 		imageFile << w << " " << h << std::endl;
 		imageFile << "255\n";
 
-		//Write image content
+		//Write image content. I may can omit the for loop by using the vector as a buffer.
 		for (int i = 0; i < w * h; i++)
 		{
 			Color pixel = image.at(i);
