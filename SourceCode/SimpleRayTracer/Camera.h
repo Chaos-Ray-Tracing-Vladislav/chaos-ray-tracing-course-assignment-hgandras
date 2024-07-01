@@ -70,7 +70,7 @@ public:
 	//These will all just rotate or translate the camera frame
 	void Dolly(float length)
 	{
-		Matrix4 t = Matrix4::CreateTranslation(-frame.orientation().col3().norm()*length);
+		Matrix4 t = Matrix4::CreateTranslation(frame.orientation().col3().norm()*length);
 		frame.transform = t * frame.transform;
 	}
 
