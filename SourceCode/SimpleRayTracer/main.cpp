@@ -188,37 +188,41 @@ void camMovements()
 	Geometry::Triangle triangle(Vector3(-1.75, -1.75, -3), Vector3(1.75, -1.75, -3), Vector3(0, 1.75, -3));
 	Image image(WIDTH, HEIGHT);
 
-	Camera cam(image, Frame(Matrix3::Identity(), Vector3(-3, 0, -1)), FOV);
+	Camera cam(image, Frame(), FOV);
 
 	std::vector<Geometry::Triangle>geometry{ triangle };
 	Scene scene(cam, geometry);
 
-	cam.Dolly(3);
+	scene.cam.Dolly(1);
 	scene.Render("Dolly.ppm");
-	cam.Dolly(-3);
+	scene.cam.Dolly(-1);
 
-	cam.Pan(-30);
+	scene.cam.Pan(-30);
 	scene.Render("Pan.ppm");
-	cam.Pan(30);
+	scene.cam.Pan(30);
 
-	cam.Pedestal(3);
+	scene.cam.Pedestal(1);
 	scene.Render("Pedestal.ppm");
-	cam.Pedestal(-3);
+	scene.cam.Pedestal(-1);
 
-	cam.Roll(30);
+	scene.cam.Roll(30);
 	scene.Render("Roll.ppm");
-	cam.Roll(-30);
+	scene.cam.Roll(-30);
 
-	cam.Tilt(30);
+	scene.cam.Tilt(30);
 	scene.Render("Tilt.ppm");
-	cam.Tilt(-30);
+	scene.cam.Tilt(-30);
 
-	cam.Truck(3);
+	scene.cam.Truck(1);
 	scene.Render("Truck.ppm");
-	cam.Truck(-3);
+	scene.cam.Truck(-1);
 	
 }
 
+void animation()
+{
+
+}
 
 int main()
 {
