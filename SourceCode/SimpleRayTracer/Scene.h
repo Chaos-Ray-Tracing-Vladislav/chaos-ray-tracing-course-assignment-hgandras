@@ -38,7 +38,7 @@ struct Scene {
 			for (int j = 0; j < geometry.size(); j++)
 			{
 				auto intersection = geometry[j].Intersect(ray);
-				if (intersection.value().t<closestT)
+				if (intersection && intersection.value().t<closestT)
 				{
 					closestIntersection = intersection.value();
 					closestT = closestIntersection.t;
