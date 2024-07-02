@@ -5,9 +5,11 @@
 #include "Geometry.h"
 #include "Scene.h"
 
-#define WIDTH 800
-#define HEIGHT 800
+#define WIDTH 400
+#define HEIGHT 400
 #define FOV 60
+
+const std::string PATH = "C:\\Gazsi\\Prog\\ChaosCamp\\chaos-ray-tracing-course-assignment-hgandras\\Images";
 
 void RandomImage()
 {
@@ -32,7 +34,7 @@ void RandomImage()
 			image.setPixel(x, y, Color(r, g, b));
 		}
 	}
-	image.writePPM("Squares.ppm");
+	image.writePPM( PATH+"\\PPM\\Squares.ppm");
 }
 
 void CircleImage()
@@ -55,9 +57,8 @@ void CircleImage()
 			image.setPixel(x, y, circleCol);
 		else
 			image.setPixel(x, y, bg);
-		
 	}
-	image.writePPM("Circle.ppm");
+	image.writePPM(PATH+"\\PPM\\Circle.ppm");
 }
 
 void rayImage()
@@ -73,7 +74,7 @@ void rayImage()
 		Color col((int)abs(ray.dir.x*255), (int)abs(ray.dir.y*255), (int)abs(ray.dir.z*255));
 		image.setPixel(x, y, col);
 	}
-	image.writePPM("Rays.ppm");
+	image.writePPM(PATH + "\\PPM\\Rays.ppm");
 }
 
 void Triangles()
@@ -105,7 +106,7 @@ void renderTriangle()
 	Geometry::Triangle triangle(Vector3(-1.75, -1.75, -3), Vector3(1.75, -1.75, -3), Vector3(0, 1.75, -3));
 	std::vector<Geometry::Triangle>geometry{ triangle };
 	Scene scene(cam,geometry);
-	scene.Render("Triangle.ppm");
+	scene.Render(PATH + "\\PPM\\Triangle.ppm");
 }
 
 void renderTriangles()
@@ -118,7 +119,7 @@ void renderTriangles()
 
 	std::vector<Geometry::Triangle>geometry{ triangle1,triangle2 };
 	Scene scene(cam, geometry);
-	scene.Render("Triangles.ppm");
+	scene.Render(PATH + "\\PPM\\Triangles.ppm");
 }
 
 void renderShape()
@@ -149,7 +150,7 @@ void renderShape()
 
 	std::vector<Geometry::Triangle>geometry{ t11,t12,t13,t21,t22,t23,t31,t32,t33,t41,t42,t43 };
 	Scene scene(cam, geometry);
-	scene.Render("Mill.ppm");
+	scene.Render(PATH + "\\PPM\\Mill.ppm");
 }
 
 void renderShapeMovedCamera()
@@ -180,7 +181,7 @@ void renderShapeMovedCamera()
 
 	std::vector<Geometry::Triangle>geometry{ t11,t12,t13,t21,t22,t23,t31,t32,t33,t41,t42,t43 };
 	Scene scene(cam, geometry);
-	scene.Render("MillPan.ppm");
+	scene.Render(PATH + "\\PPM\\MillPan.ppm");
 }
 
 void camMovements()
@@ -194,33 +195,77 @@ void camMovements()
 	Scene scene(cam, geometry);
 
 	scene.cam.Dolly(1);
-	scene.Render("Dolly.ppm");
+	scene.Render(PATH + "\\PPM\\Dolly.ppm");
 	scene.cam.Dolly(-1);
 
 	scene.cam.Pan(-30);
-	scene.Render("Pan.ppm");
+	scene.Render(PATH + "\\PPM\\Pan.ppm");
 	scene.cam.Pan(30);
 
 	scene.cam.Pedestal(1);
-	scene.Render("Pedestal.ppm");
+	scene.Render(PATH + "\\PPM\\Pedestal.ppm");
 	scene.cam.Pedestal(-1);
 
 	scene.cam.Roll(30);
-	scene.Render("Roll.ppm");
+	scene.Render(PATH + "\\PPM\\Roll.ppm");
 	scene.cam.Roll(-30);
 
 	scene.cam.Tilt(30);
-	scene.Render("Tilt.ppm");
+	scene.Render(PATH + "\\PPM\\Tilt.ppm");
 	scene.cam.Tilt(-30);
 
 	scene.cam.Truck(1);
-	scene.Render("Truck.ppm");
+	scene.Render(PATH + "\\PPM\\Truck.ppm");
 	scene.cam.Truck(-1);
 	
 }
 
 void animation()
 {
+	Geometry::Triangle triangle(Vector3(-1.75, -1.75, -3), Vector3(1.75, -1.75, -3), Vector3(0, 1.75, -3));
+	Image image(WIDTH, HEIGHT);
+
+	Camera cam(image, Frame(), FOV);
+
+	std::vector<Geometry::Triangle>geometry{ triangle };
+	Scene scene(cam, geometry);
+
+	int frameCount = 0;
+	for (int i = 0; i < 10; i++)
+	{
+		scene.Render(PATH + "\\Anim\\Frame" + std::to_string(frameCount) + ".ppm");
+		std::cout << "Frame " << frameCount << " rendered" << std::endl;
+		scene.cam.Dolly(0.333);
+		frameCount++;
+	}
+
+	for (int i = 0; i < 15; i++) {
+		scene.Render(PATH + "\\Anim\\Frame" + std::to_string(frameCount) + ".ppm");
+		std::cout << "Frame " << frameCount << " rendered" << std::endl;
+		scene.cam.Pan(-1);
+		frameCount++;
+	}
+
+	for (int i = 0; i < 30; i++) {
+		scene.Render(PATH + "\\Anim\\Frame" + std::to_string(frameCount) + ".ppm");
+		std::cout << "Frame " << frameCount << " rendered" << std::endl;
+		scene.cam.Pan(1);
+		frameCount++;
+	}
+
+	for (int i = 0; i < 15; i++) {
+		scene.Render(PATH + "\\Anim\\Frame" + std::to_string(frameCount) + ".ppm");
+		std::cout << "Frame " << frameCount << " rendered" << std::endl;
+		scene.cam.Pan(-1);
+		frameCount++;
+	}
+
+	for (int i = 0; i < 10; i++) {
+		scene.Render(PATH + "\\Anim\\Frame" + std::to_string(frameCount) + ".ppm");
+		std::cout << "Frame " << frameCount << " rendered" << std::endl;
+		scene.cam.Roll(-1);
+		frameCount++;
+	}
 
 }
 
@@ -244,5 +289,6 @@ int main()
 	//Task6
 	renderShapeMovedCamera();
 	camMovements();
+	animation();
 }
 
